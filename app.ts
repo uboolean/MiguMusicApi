@@ -9,6 +9,22 @@ import RouterMap = Types.RouteMap;
 
 const app = express();
 
+
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    // 为了安全，可指定域名白名单，此处为所有域名都可访问，配置多个域名白名单不可直接写数组，要判断条件后赋值单个域名
+    // res.header("Access-Control-Allow-Origin", "http://localhost:8080",'http://www.baidu.com'); 
+    // 也可以这样写上多个白名单的地址
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,token");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    next();
+});
+
+
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
